@@ -6,13 +6,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "../../contexts/authContext";
 import Loader from "../Loader/loader";
 
 const Register = () => {
-  const { handleRegister, error, loading } = useContext(authContext);
+  const { handleRegister, error, setError, loading } = useContext(authContext);
   console.log(loading);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -36,9 +36,13 @@ const Register = () => {
       handleRegister(formData, navigate);
     }
   }
+  useEffect(() => {
+    setError(false);
+  }, []);
   if (loading) {
     return <Loader />;
   }
+
   return (
     <Container maxWidth="sm">
       <Box display={"flex"} flexDirection={"column"} marginTop={"50px"}>
