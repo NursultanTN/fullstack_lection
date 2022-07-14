@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AddProduct from "./components/AddProduct/AddProduct";
+import EditProduct from "./components/EditProduct/EditProduct";
 import Login from "./components/Login/Login";
 import ProductsList from "./components/ProductsList/ProductsList";
 import Register from "./components/Register/Register";
@@ -43,6 +44,7 @@ const Routing = () => {
           currentUser ? <AddProduct /> : <Navigate to="/login" replace />
         }
       />
+      <Route path="/edit/:id" element={<EditProduct />} />
     </Routes>
   );
 };

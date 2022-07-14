@@ -18,6 +18,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
+import { productsContext } from "../../contexts/productContext/productContext";
+import { useNavigate } from "react-router-dom";
 
 const ExpandMore = styled(props => {
   const { expand, ...other } = props;
@@ -31,6 +33,9 @@ const ExpandMore = styled(props => {
 }));
 
 export default function ProductsCard({ item }) {
+  const navigate = useNavigate();
+  const { deleteProduct, toggleLike, toggleFavorites } =
+    React.useContext(productsContext);
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -72,25 +77,20 @@ export default function ProductsCard({ item }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        {item.favorite_by_user ? (
-          <IconButton>
-            <BookmarkIcon />
-          </IconButton>
-        ) : (
-          <IconButton>
-            <TurnedInNotIcon />
-          </IconButton>
-        )}
+        <IconButton onClick={() => toggleFavorites(item.id)}>
+          {item.favorite_by_user ? <BookmarkIcon /> : <TurnedInNotIcon />}
+        </IconButton>
 
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton onClick={() => toggleLike(item.id)}>
+          {item.likes}
+          <FavoriteIcon color={item.liked_by_user ? "error" : "black"} />
         </IconButton>
         {item.is_author ? (
           <>
-            <IconButton>
+            <IconButton onClick={() => deleteProduct(item.id)}>
               <DeleteIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => navigate(`/edit/${item.id}`)}>
               <EditIcon />
             </IconButton>
           </>
