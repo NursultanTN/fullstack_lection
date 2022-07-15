@@ -25,7 +25,10 @@ const Header = () => {
             Products
           </Button>
           <Button variant="contained" onClick={() => navigate("/add")}>
-            Add
+            Add Product
+          </Button>
+          <Button variant="contained" onClick={() => navigate("/favorites")}>
+            Favorites
           </Button>
 
           <Typography variant="h6">{currentUser}</Typography>
